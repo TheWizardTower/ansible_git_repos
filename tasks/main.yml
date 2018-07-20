@@ -2,40 +2,40 @@
 # tasks file for git-repos
 - name: Checkout Dotfiles repo.
   become: true
-  become_user: merlin
+  become_user: "{{ user }}"
   git: repo=https://github.com/TheWizardTower/abrazo.git
-       dest=/home/merlin/abrazo
+       dest=/home/{{ user }}/abrazo
        accept_hostkey=yes
        update=no
 
 - name: Checkout a copy of Spacemacs.
   become: true
-  become_user: merlin
+  become_user: "{{ user }}"
   git: repo=https://github.com/syl20bnr/spacemacs.git
-       dest=/home/merlin/spacemacs/.emacs.d
+       dest="/home/{{ user }}/spacemacs/.emacs.d"
        accept_hostkey=true
        update=yes
 
 - name: Checkout a copy of Tmux Plugin Manager
   become: true
-  become_user: merlin
+  become_user: "{{ user }}"
   git:
     repo: https://github.com/tmux-plugins/tpm
-    dest: /home/merlin/.tmux/plugins/tpm
+    dest: "/home/{{ user }}/.tmux/plugins/tpm"
     accept_hostkey: true
     update: yes
 
 - name: Create ~/git
   become: true
-  become_user: merlin
-  file: path=/home/merlin/git state=directory
+  become_user: "{{ user }}"
+  file: path=/home/{{ user }}/git state=directory
 
 - name: Checkout useful git repos.
   become: true
-  become_user: merlin
+  become_user: "{{ user }}"
   git: repo={{ item.src }}
        accept_hostkey=true
-       dest=/home/merlin/git/{{ item.dest }}
+       dest="/home/{{ user }}/git/{{ item.dest }}"
        update=yes 
   with_items:
     - { src: 'https://github.com/Airblader/xcb-util-xrm.git', dest: 'xcb-util-xrm' }
@@ -68,45 +68,45 @@
 
 - name: Setup fonts.
   become: true
-  become_user: merlin
-  shell: "/home/merlin/git/fonts/install.sh"
+  become_user: "{{ user }}"
+  shell: "/home/{{ user }}/git/fonts/install.sh"
 
 - name: Setup bass.
   become: true
-  become_user: merlin
+  become_user: "{{ user }}"
   shell: "make install"
   args:
-    chdir: /home/merlin/git/bass
+    chdir: "/home/{{ user }}/git/bass"
 
 - name: Setup GRC.
-  shell: "/home/merlin/git/grc/install.sh"
+  shell: "/home/{{ user }}/git/grc/install.sh"
   args:
-    chdir: /home/merlin/git/grc
+    chdir: "/home/{{ user }}/git/grc"
 
 - name: Install hr.
   shell: "make install"
   args:
-    chdir: /home/merlin/git/hr
+    chdir: "/home/{{ user }}/git/hr"
 
 - name: Build and install tig.
   become: true
-  become_user: merlin
+  become_user: "{{ user }}"
   shell: "make; make install; make install-doc; make install-release-doc"
   args:
-    chdir: /home/merlin/git/tig
+    chdir: "/home/{{ user }}/git/tig"
 
 
 - name: Build and install lefortorvo.
   become: true
-  become_user: merlin
+  become_user: "{{ user }}"
   shell: "cargo install"
   args:
-    chdir: /home/merlin/git/lefortorvo
+    chdir: "/home/{{ user }}/git/lefortorvo"
 
 - name: Setup abrazo dotfiles repo.
   become: true
-  become_user: merlin
-  shell: "/home/merlin/dotfiles/install"
+  become_user: "{{ user }}"
+  shell: "/home/{{ user }}/dotfiles/install"
   args:
-    chdir: /home/merlin/dotfiles
+    chdir: "/home/{{ user }}/dotfiles"
  
