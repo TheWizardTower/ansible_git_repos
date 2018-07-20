@@ -1,0 +1,21 @@
+galaxy_info:
+  author: Adam McCullough
+  description: Ansible Playbook to clone and set up a set of git repos I use in my development environment.
+
+  license: license (BSD)
+
+  min_ansible_version: 1.2
+  platforms:
+  - name: Fedora
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+
+  galaxy_tags: []
+
+dependencies:
+        - role: thewizardtower.ansible_version_control
+        - role: thewizardtower.ansible_basic_cli_utilities
+        - role: thewizardtower.ansible_source_editors
